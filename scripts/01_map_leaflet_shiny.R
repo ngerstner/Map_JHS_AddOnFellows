@@ -9,7 +9,7 @@ library(stringr)
 # read in fellow data
 fellows <-
   read.csv(
-    "/Users/nathalie_gerstner/Documents/ownCloud/Map_JHS_AddOnFellows/data/fellow_network_new.csv",
+    "../data/fellow_network_new.csv",
     sep = ";",
     dec = ","
   )
@@ -27,10 +27,12 @@ fellows <- fellows %>%
   mutate(Status = if_else(str_detect(Affiliation_Institut, "Alumn"), 
                           true = "Alumni", 
                           false = "Current Fellow"))
+
 # Create a palette that maps factor levels to colors
 pal <- colorFactor(c("navy", "red"), domain = c("Alumni", "Current Fellow"))
 
 
+# UI
 ui <- shinyUI(fluidPage(
   titlePanel("Joachim Herz Add-on Network"),
   sidebarLayout(
@@ -80,7 +82,7 @@ ui <- shinyUI(fluidPage(
 ))
 
 
-
+# Server
 server <- function(input, output) {
  
   map_data_react <- reactive({
